@@ -15,8 +15,8 @@ struct Arg {
 };
 using ArgList = std::vector<Arg>;
 
-bool is_short_arg(const std::string& str);
-bool is_long_arg(const std::string& str);
+bool is_single_arg(const std::string& str);
+bool is_multi_arg(const std::string& str);
 bool is_arg(const std::string& str);
 bool is_value(const std::string& str);
 ArgList get_single_arg(const std::string& args_str);

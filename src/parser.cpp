@@ -1,18 +1,18 @@
 #include "parser.hpp"
 
-bool is_short_arg(const std::string& str)
+bool is_single_arg(const std::string& str)
 {
 	return str.length() >= 2 && str[0] == '-' && str[1] != '-';
 }
 
-bool is_long_arg(const std::string& str)
+bool is_multi_arg(const std::string& str)
 {
 	return str.length() >= 3 && str[0] == '-' && str[1] == '-' && str[2] != '-';
 }
 
 bool is_arg(const std::string& str)
 {
-	return is_long_arg(str) || is_short_arg(str);
+	return is_single_arg(str) || is_multi_arg(str);
 }
 
 bool is_value(const std::string& str)
@@ -22,14 +22,14 @@ bool is_value(const std::string& str)
 
 ArgList get_single_arg(const std::string& args_str)
 {
-	assert(is_long_arg(args_str));
+	assert(is_single_arg(args_str));
 
 	return {Arg{args_str.substr(2), true}};
 }
 
 ArgList get_multi_args(const std::string& args_str)
 {
-	assert(is_short_arg(args_str));
+	assert(is_multi_arg(args_str));
 
 	ArgList args;
 	auto it = std::back_inserter(args);
@@ -46,13 +46,13 @@ std::tuple<int, ArgList> get_next_args(int count, char* argv[])
 	ArgList args;
 
 	for (int i = 0; i < count; i++) {
-		if (is_long_arg(argv[i]))
+		if (is_single_arg(argv[i]))
 		{
 			auto short_args = get_single_arg(argv[i]);
 			args.insert(std::end(args), std::begin(short_args), std::end(short_args));
 			step++;
 		}
-		else if (is_short_arg(argv[i]))
+		else if (is_multi_arg(argv[i]))
 		{
 			auto short_args = get_multi_args(argv[i]);
 			args.insert(std::end(args), std::begin(short_args), std::end(short_args));
