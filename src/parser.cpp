@@ -69,7 +69,7 @@ std::tuple<int, ArgList> get_next_args(int count, char* argv[])
 
 std::optional<float> try_string_to_float(const std::string& str)
 {
-	try { return std::stoi(str); } catch(std::exception ex) { return {}; }
+	try { return std::stof(str); } catch(std::exception ex) { return {}; }
 }
 
 SingleValue string_to_single_value(const std::string& str)
