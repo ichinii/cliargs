@@ -2,12 +2,12 @@
 
 bool is_single_arg(const std::string& str)
 {
-	return str.length() >= 2 && str[0] == '-' && str[1] != '-';
+	return str.length() >= 3 && str[0] == '-' && str[1] == '-' && str[2] != '-';
 }
 
 bool is_multi_arg(const std::string& str)
 {
-	return str.length() >= 3 && str[0] == '-' && str[1] == '-' && str[2] != '-';
+	return str.length() >= 2 && str[0] == '-' && str[1] != '-';
 }
 
 bool is_arg(const std::string& str)
