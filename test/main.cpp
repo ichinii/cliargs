@@ -1,21 +1,17 @@
 #include <iostream>
-#include "parser.hpp"
-
-std::ostream& operator<< (std::ostream& os, const SingleValueList& values)
-{
-	for (const SingleValue& value : values)
-		std::visit([&] (auto&& v) { os << "[" << v << "]"; }, value);
-	return os;
-}
+#include <parser.hpp>
+#include <print.hpp>
 
 int main(int argc, char* argv[])
 {
 	std::cout << std::boolalpha;
 
-	add_arg("x", {.min_values = 1, .max_values = 1, .max_occur = 1});
-	add_arg("y", {.min_values = 0, .max_values = 2, .max_occur = 1});
+	cliargs::add_arg("x");
+	cliargs::add_processor<bool> ("x", [] (bool  b) { std::cout <<  "x<bool> = " << b << std::endl; });
+	cliargs::add_processor<float>("x", [] (float b) { std::cout << "x<float> = " << b << std::endl; });
+	cliargs::add_processor<std::string>("x", [] (std::string b) { std::cout << "x<std::string> = " << b << std::endl; });
 
-	auto [args, error] = parse_args(argc, argv);
+	auto [args, error] = cliargs::process_args(argc, argv);
 
 	if (error) {
 		auto [code, arg] = error.value();

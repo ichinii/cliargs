@@ -63,7 +63,7 @@ flags = [
 '-isystem', './tests/gmock/include',
 '-isystem', './benchmarks/benchmark/include',
 '-I', './ClangCompleter',
-'-I', '/usr/include/c++/7.2.1',
+'-I', '/usr/include/c++/any_new',
 '-I', '/usr/include',
 '-I', '.',
 '-I', 'src'
